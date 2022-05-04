@@ -95,7 +95,7 @@ class Funk:
         cmap = sns.diverging_palette(240, 10, as_cmap=True)
         sns.heatmap(corr, mask=mask, linewidths=.5, cmap=cmap, center=0, ax=ax)
         ax.set_title('Correlation')
-        plt.savefig(self.path_to_file + f'Figures/Funk-Correlation.png')
+        plt.savefig(self.path_to_file + 'Figures/Funk-Correlation.png')
         plt.show()
         corr_metrics = df.corr()
         corr_metrics.style.background_gradient()
@@ -115,7 +115,7 @@ class Funk:
         df = self._preprocess_data()
         fig = plt.subplots()
         sns.regplot(x='energy', y='loudness', data=df, color='black')
-        plt.savefig(self.path_to_file + f'Figures/Funk-loudness-energy.png')
+        plt.savefig(self.path_to_file + 'Figures/Funk-loudness-energy.png')
         plt.show()
         items = ['acousticness', 'energy', 'liveness', 'popularity',
                  'speechiness', 'tempo', 'valence', 'danceability']
@@ -132,7 +132,7 @@ class Funk:
         dance_lab = [0, 1, 2, 3]
         s1, s2, s3, s4 = [], [], [], []
         s = []
-        for c, i in enumerate(df.danceability):
+        for i in df.danceability:
             if i >= 0.00 and i < 0.50:
                 s1.append(i)
                 s.append(dance_lab[0])
@@ -190,9 +190,9 @@ class Funk:
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=self.test_size,
                                                             random_state=self.random_seed)
         # Compute ROC curve and ROC area for each class
-        fpr = dict()
-        tpr = dict()
-        roc_auc = dict()
+        fpr = {}
+        tpr = {}
+        roc_auc = {}
         for i in range(n_classes):
             fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
             roc_auc[i] = auc(fpr[i], tpr[i])
@@ -239,7 +239,10 @@ class Funk:
         plt.ylabel('True Positive Rate')
         plt.legend(loc="lower right")
         plt.savefig(
-            self.path_to_file + f'Figures/Funk-OneVsRestClassifier-SVM-poly-ROC_.png')
+            self.path_to_file
+            + 'Figures/Funk-OneVsRestClassifier-SVM-poly-ROC_.png'
+        )
+
         plt.show()
 
         y_prob = classifier.predict_proba(X_test)
